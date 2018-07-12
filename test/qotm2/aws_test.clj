@@ -18,11 +18,16 @@
   (testing "can get s3 client"
     (is (instance? AmazonS3 aws/s3))))
 
-(defn mock-client ^AmazonS3 [^S3Object mock-object]
-  (let [^AmazonS3 mock (Mockito/mock AmazonS3)]
-    (.. (Mockito/when (.getObject mock ^String (Mockito/any) ^String (Mockito/any)))
-      (thenReturn mock-object))
-    mock))
+(defn mock-client
+  ^AmazonS3
+  ([^S3Object mock-object]
+   (let [^AmazonS3 mock (Mockito/mock AmazonS3)]
+     (.. (Mockito/when (.getObject
+                         mock
+                         ^String (Mockito/any)
+                         ^String (Mockito/any)))
+       (thenReturn mock-object))
+     mock)))
 
 (defn mock-http ^HttpRequestBase [] (Mockito/mock HttpRequestBase))
 
